@@ -2,68 +2,71 @@
 //  CV — source unique. Compile avec :  typst compile cv.typ
 // ============================================================
 
-#let nom = "Junot NOM"
-#let titre = "Développeur Mobile & Backend"
-#let email = "prenom.nom@example.com"
-#let github = "github.com/tonpseudo"
-#let linkedin = "linkedin.com/in/tonpseudo"
-#let ville = "Île-de-France, France"
+#let nom = "Junot MONTPRE"
+#let titre = "Développeur React · Go · Node.js"
+#let email = "junot-hery-nantenaina.montpre@epitech.eu"
+#let github = "github.com/mpJunot"
+#let linkedin = "linkedin.com/in/junot-montpre"
+#let ville = "Paris, France"
+// Repo public : pas de téléphone ni d'adresse ici. Pour une variante envoyée en
+// direct, décommente et ajoute #tel dans l'en-tête.
+// #let tel = "06 52 07 02 08"
 
 // ---------- Thème ----------
-#let accent = rgb("#1a1a1a")
+#let encre = rgb("#1f1f1f")
+#let bleu = rgb("#2b7fa6")
 #let muted = rgb("#6b6b6b")
-#let rule = rgb("#d8d8d8")
 
 #set page(
   paper: "a4",
-  margin: (x: 1.7cm, top: 1.4cm, bottom: 1.4cm),
+  margin: (x: 1.35cm, top: 0.95cm, bottom: 0.85cm),
 )
 
 #set text(
-  font: ("Inter", "New Computer Modern Sans"),
-  size: 9.7pt,
+  font: ("Courier Prime", "DejaVu Sans Mono"),
+  size: 7.45pt,
   lang: "fr",
-  fill: accent,
+  fill: encre,
 )
 
-#set par(justify: false, leading: 0.62em)
+#set par(justify: false, leading: 0.52em)
 
-#show link: it => text(fill: accent, underline(offset: 2pt, stroke: 0.4pt + muted, it))
+#show link: it => text(fill: bleu, it)
 
 // ---------- Composants ----------
 
 #let section(titre) = {
-  v(0.9em)
+  v(0.45em)
   block(
     width: 100%,
-    stroke: (bottom: 0.6pt + rule),
-    inset: (bottom: 0.35em),
-    text(size: 9pt, weight: "bold", tracking: 0.12em, upper(titre)),
+    stroke: (bottom: 1pt + bleu),
+    inset: (bottom: 0.3em),
+    text(size: 9pt, weight: "bold", fill: bleu, tracking: 0.08em, upper(titre)),
   )
-  v(0.5em)
+  v(0.4em)
 }
 
 // Une expérience / formation
-#let entree(poste, structure, periode, lieu: none, puces: ()) = {
+#let entree(poste, structure, periode, lieu: none, puces: (), techs: none) = {
   block(breakable: false, width: 100%, {
     grid(
       columns: (1fr, auto),
       align: (left, right),
       text(weight: "bold", poste),
-      text(size: 8.8pt, fill: muted, periode),
+      text(size: 8pt, fill: bleu, periode),
     )
     v(-0.35em)
     grid(
       columns: (1fr, auto),
       align: (left, right),
-      text(size: 9.2pt, fill: muted, structure),
-      if lieu != none { text(size: 8.8pt, fill: muted, lieu) } else { [] },
+      text(size: 8.2pt, fill: muted, structure),
+      if lieu != none { text(size: 8pt, fill: muted, lieu) } else { [] },
     )
     if puces.len() > 0 {
-      v(0.25em)
+      v(0.3em)
       for p in puces {
-        block(inset: (left: 0.9em), {
-          text(fill: muted, sym.dot.c)
+        block(inset: (left: 0.8em), {
+          text(fill: bleu, sym.dash.en)
           h(0.5em)
           p
         })
@@ -71,51 +74,54 @@
       }
       v(0.45em)
     }
+    if techs != none {
+      v(-0.1em)
+      block(inset: (left: 0.8em), text(size: 8pt, fill: muted, [Stack : #techs]))
+    }
   })
-  v(0.55em)
+  v(0.38em)
 }
 
 // Ligne de compétences
 #let skill(categorie, valeurs) = {
   grid(
-    columns: (5.5em, 1fr),
+    columns: (5em, 1fr),
     column-gutter: 0.6em,
-    text(weight: "bold", size: 9.2pt, categorie),
+    text(weight: "bold", fill: bleu, categorie),
     valeurs,
   )
-  v(0.3em)
+  v(0.28em)
 }
 
 // ============================================================
 //  EN-TÊTE
 // ============================================================
 
-#align(center, {
-  text(size: 21pt, weight: "bold", tracking: 0.02em, nom)
-  v(-0.45em)
-  text(size: 10.5pt, fill: muted, titre)
-  v(0.15em)
-  text(size: 8.8pt, fill: muted, {
-    link("mailto:" + email)[#email]
-    [ #sym.dot.c ]
-    link("https://" + github)[#github]
-    [ #sym.dot.c ]
-    link("https://" + linkedin)[#linkedin]
-    [ #sym.dot.c ]
-    ville
-  })
+#text(size: 19pt, weight: "bold", fill: bleu, nom)
+#v(-0.55em)
+#text(size: 10.5pt, fill: bleu, titre)
+#v(0.05em)
+#text(size: 8pt, fill: muted, {
+  link("mailto:" + email)[#email]
+  [ #sym.dot.c ]
+  ville
+  [ #sym.dot.c ]
+  [Permis B]
+  linebreak()
+  link("https://" + linkedin)[#linkedin]
+  [ #sym.dot.c ]
+  link("https://" + github)[#github]
 })
 
 // ============================================================
 //  PROFIL
 // ============================================================
 
-#section("Profil")
+#v(0.5em)
 
-Développeur mobile et backend spécialisé React Native (TypeScript) et Go.
-Je conçois des applications de bout en bout : interface, API GraphQL, base de
-données et chaîne de déploiement. Actuellement chez ZBO Media (Groupe Figaro),
-où je travaille sur des produits mobiles à forte audience.
+Développeur React côté interface, Go et Node.js côté API, dernière année à Epitech Paris.
+Je construis des applications de bout en bout — écran, API GraphQL, PostgreSQL, déploiement
+conteneurisé — et je les livre en production, en entreprise comme sur mes projets personnels.
 
 // ============================================================
 //  EXPÉRIENCE
@@ -124,26 +130,41 @@ où je travaille sur des produits mobiles à forte audience.
 #section("Expérience professionnelle")
 
 #entree(
-  "Développeur Mobile & Backend",
+  "Développeur React & Go",
   "ZBO Media — Groupe Figaro",
-  "20XX — aujourd'hui",
+  "Mai 2026 — aujourd'hui",
   lieu: "Paris",
   puces: (
-    [Développement d'applications mobiles React Native / TypeScript.],
-    [Conception et maintenance d'APIs GraphQL en Go, adossées à PostgreSQL.],
-    [Mise en place et maintien de pipelines CI/CD sur GitHub Actions.],
-    [#emph[À compléter :] une réalisation avec un chiffre — audience, temps de build, latence, taux de crash.],
+    [Growth Hub — plateforme SaaS de prospection B2B multicanale (LinkedIn + email), conçue et développée de bout en bout.],
+    [Moteur de séquences sur workers Go et file de jobs PostgreSQL : fenêtres d'envoi, quotas par canal, reprise après reconnexion, arrêt sur réponse.],
+    [Messagerie unifiée avec classification IA des réponses en temps réel, suivi de délivrabilité et une dizaine de connecteurs externes (email, enrichissement, CRM).],
   ),
+  techs: [Go, GraphQL (gqlgen), sqlc, PostgreSQL, Next.js, React, TypeScript, Docker, AWS],
 )
 
 #entree(
-  "Intitulé du poste",
-  "Entreprise",
-  "20XX — 20XX",
-  lieu: "Ville",
+  "Développeur React & Node.js",
+  "Peinture Soleil",
+  "Févr. 2024 — Juin 2024",
+  lieu: "Saint-Benoît, La Réunion",
   puces: (
-    [Supprime ce bloc s'il n'est pas utile, ou duplique-le pour une expérience de plus.],
+    [Conception et développement d'une application web de gestion de projets,
+     de la modélisation des données à la mise en production.],
+    [Architecture back-end : API REST, schéma PostgreSQL, conteneurisation Docker.],
   ),
+  techs: [React, MUI, TypeScript, Node.js, Docker],
+)
+
+#entree(
+  "Développeur JavaScript",
+  "Tiktak Production",
+  "Nov. — Déc. 2022",
+  lieu: "Saint-Denis, La Réunion",
+  puces: (
+    [Maintenance et évolution de 4 sites web clients en production.],
+    [Nouvelles fonctionnalités, correction de bugs, optimisation des performances.],
+  ),
+  techs: [HTML5, CSS3, JavaScript, PHP],
 )
 
 // ============================================================
@@ -153,48 +174,70 @@ où je travaille sur des produits mobiles à forte audience.
 #section("Projets")
 
 #entree(
-  "Élite — application d'entraînement et de nutrition",
-  "Projet personnel · React Native, Go, GraphQL, PostgreSQL",
-  "20XX — aujourd'hui",
+  "Epitrello — outil de gestion de projet collaboratif",
+  "Projet Epitech",
+  "20XX",
   puces: (
-    [Application mobile combinant périodisation de force et suivi nutritionnel.],
-    [Backend Go en architecture hexagonale (ports \& adapters), API GraphQL,
-     PostgreSQL managé, déploiement sur Cloud Run.],
-    [Moteur de calcul d'e1RM en charge additionnelle, cycles Volume / Force /
-     Explosivité, et système de flexibilité glucidique à protéines et lipides fixes.],
+    [Boards, listes, cartes et assignations collaboratives ; API GraphQL avec
+     authentification et souscriptions temps réel.],
   ),
+  techs: [Next.js, NestJS, PostgreSQL, Prisma],
+)
+
+#entree(
+  "CopyMe — analyse de mouvements au basketball par IA",
+  "Projet Epitech",
+  "20XX",
+  puces: (
+    [Analyse des mouvements de basketball à partir d'une vidéo, via un modèle
+     de vision YOLO exposé par une API FastAPI.],
+  ),
+  techs: [React Native, Python, FastAPI, YOLO],
 )
 
 // ============================================================
-//  COMPÉTENCES
+//  COMPÉTENCES · FORMATION
 // ============================================================
 
 #section("Compétences techniques")
 
-#skill("Mobile", [React Native, TypeScript, React])
-#skill("Backend", [Go, GraphQL, REST, architecture hexagonale])
-#skill("Données", [PostgreSQL, Neon])
-#skill("Infra", [GitHub Actions, Google Cloud Run, Docker])
-#skill("Outils", [Git, Typst, \u{2026}])
-
-// ============================================================
-//  FORMATION
-// ============================================================
-
-#section("Formation")
-
-#entree(
-  "Intitulé du diplôme",
-  "Établissement",
-  "20XX — 20XX",
-  lieu: "Ville",
+#grid(
+  columns: (1fr, 1fr),
+  column-gutter: 1.4em,
+  {
+    skill("Langages", [TypeScript, JavaScript, Go, Python])
+    skill("Front", [React, Next.js, React Native, Tailwind, Apollo])
+    skill("Back", [Go, Node.js, NestJS, GraphQL (gqlgen), FastAPI])
+  },
+  {
+    skill("Données", [PostgreSQL, sqlc, Prisma])
+    skill("Infra", [Docker, GitHub Actions, AWS, Cloud Run])
+    skill("Méthodes", [Architecture hexagonale, CI/CD, Git])
+  },
 )
 
 // ============================================================
-//  DIVERS
+//  FORMATION · DIVERS
 // ============================================================
 
-#section("Divers")
-
-#skill("Langues", [Français (langue maternelle), Anglais (professionnel)])
-#skill("Sport", [Street lifting — traction et dips lestés — et course à pied.])
+#grid(
+  columns: (1.55fr, 1fr),
+  column-gutter: 1.4em,
+  {
+    section("Formation")
+    entree(
+      "Expert en Technologies de l'Information (RNCP 7)",
+      "Epitech Paris — Programme Grande École",
+      "2022 — 2026",
+      lieu: "Paris",
+      puces: (
+        [Échange Computer Science \& IA, Beijing Jiaotong University, Pékin (sept. 2024 — juil. 2025).],
+      ),
+    )
+  },
+  {
+    section("Divers")
+    skill("Langues", [Français (natif), Anglais (avancé), Espagnol (intermédiaire)])
+    skill("Sport", [Musculation et street lifting.])
+  },
+)
