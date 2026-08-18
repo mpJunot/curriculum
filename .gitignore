@@ -1,0 +1,11 @@
+# Le PDF est un artefact de build, jamais commité
+*.pdf
+!assets/**/*.pdf
+
+# Sorties locales
+public/
+build/
+
+# Système
+.DS_Store
+Thumbs.db

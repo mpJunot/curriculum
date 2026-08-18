@@ -1,0 +1,61 @@
+name: Build & deploy CV
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Nécessaire pour publier sur GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Une seule publication à la fois, sans annuler celle en cours
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Installer Typst
+        uses: typst-community/setup-typst@v4
+
+      - name: Compiler le CV
+        run: |
+          mkdir -p public
+          typst compile cv.typ public/cv.pdf
+          # Petite page d'accueil qui redirige vers le PDF
+          cat > public/index.html <<'HTML'
+          <!doctype html>
+          <meta charset="utf-8">
+          <title>CV</title>
+          <meta http-equiv="refresh" content="0; url=./cv.pdf">
+          <p><a href="./cv.pdf">Télécharger le CV</a></p>
+          HTML
+
+      # Le PDF reste téléchargeable depuis l'onglet Actions, même sans Pages
+      - name: Archiver le PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: cv-pdf
+          path: public/cv.pdf
+
+      - name: Préparer l'artefact Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
