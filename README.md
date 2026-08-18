@@ -3,7 +3,7 @@
 Source unique de mon CV. Le PDF est compilé automatiquement à chaque push
 et publié à une URL stable.
 
-**→ [Dernière version du CV](https://TONPSEUDO.github.io/cv/cv.pdf)**
+**→ [Dernière version du CV](https://mpjunot.github.io/cv/cv.pdf)**
 
 ---
 
